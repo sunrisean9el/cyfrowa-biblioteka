@@ -1,0 +1,32 @@
+[
+  {
+    "model": "books.book",
+    "pk": 1,
+    "fields": {
+      "title": "Pan Tadeusz",
+      "author": "Adam Mickiewicz",
+      "year": 1834,
+      "is_available": true
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 2,
+    "fields": {
+      "title": "Lalka",
+      "author": "Bolesław Prus",
+      "year": 1890,
+      "is_available": true
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 3,
+    "fields": {
+      "title": "Ferdydurke",
+      "author": "Witold Gombrowicz",
+      "year": 1937,
+      "is_available": true
+    }
+  }
+]

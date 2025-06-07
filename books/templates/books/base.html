@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Biblioteka</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4 shadow-sm">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{% url 'book_list' %}">📚 Biblioteka</a>
+      <div class="d-flex">
+        {% if user.is_authenticated %}
+          <span class="me-2">Witaj, {{ user.username }}!</span>
+          <a href="{% url 'logout' %}" class="btn btn-outline-danger">Wyloguj</a>
+        {% else %}
+          <a href="{% url 'login' %}" class="btn btn-outline-primary me-2">Zaloguj</a>
+          <a href="{% url 'register' %}" class="btn btn-primary">Zarejestruj się</a>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+
+    <!-- ALERTY -->
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Zamknij"></button>
+        </div>
+      {% endfor %}
+    {% endif %}
+
+    <!-- BLOK NA WIDOKI -->
+    {% block content %}
+    {% endblock %}
+
+  </div>
+
+  <!-- Bootstrap JS (obsługa alertów itd.) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

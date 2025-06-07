@@ -1,0 +1,58 @@
+{% extends 'books/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<form method="get" class="row mb-4">
+  <div class="col-md-4">
+    <input type="text" name="author" value="{{ query_author }}" placeholder="Szukaj po autorze" class="form-control">
+  </div>
+  <div class="col-md-3">
+    <input type="number" name="year" value="{{ query_year }}" placeholder="Szukaj po roku" class="form-control">
+  </div>
+  <div class="col-md-2">
+    <button type="submit" class="btn btn-outline-primary w-100">Szukaj</button>
+  </div>
+  <div class="col-md-2">
+    <a href="{% url 'book_list' %}" class="btn btn-outline-secondary w-100">Wyczyść</a>
+  </div>
+</form>
+
+<a href="{% url 'book_create' %}" class="btn btn-primary mb-3">Dodaj książkę</a>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Tytuł</th>
+      <th>Autor</th>
+      <th>Rok</th>
+      <th>Dostępność</th>
+      <th>Akcja</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for book in books %}
+      <tr>
+        <td>{{ book.title }}</td>
+        <td>{{ book.author }}</td>
+        <td>{{ book.year }}</td>
+        <td>{{ book.is_available|yesno:"Tak,Nie" }}</td>
+        <td>
+          {% if book.is_available %}
+            <a href="{% url 'loan_book' book.pk %}" class="btn btn-success btn-sm">Wypożycz</a>
+          {% else %}
+            {% if book.id in loaned_books %}
+              <a href="{% url 'return_book' book.pk %}" class="btn btn-warning btn-sm">Zwróć</a>
+            {% else %}
+              <span class="text-muted">Wypożyczona</span>
+            {% endif %}
+          {% endif %}
+        </td>
+      </tr>
+    {% empty %}
+      <tr>
+        <td colspan="5" class="text-center text-muted">Brak książek do wyświetlenia.</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
