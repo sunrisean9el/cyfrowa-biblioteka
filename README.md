@@ -101,7 +101,7 @@ docker-compose exec web python manage.py migrate
 Jeśli chcesz załadować przykładowe dane, takie jak książki, możesz to zrobić, uruchamiając poniższe polecenie:
 
 ```bash
-docker-compose exec web python manage.py loaddata fixtures.json
+docker-compose exec web python manage.py loaddata sample_data.json
 ```
 
 ### 5. **Utwórz konto administratora**
