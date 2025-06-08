@@ -61,17 +61,19 @@ def loan_book(request, pk):
 @login_required
 def return_book(request, pk):
     book = get_object_or_404(Book, pk=pk)
-    try:
-        loan = Loan.objects.get(book=book, user=request.user, returned=False)
-    except Loan.DoesNotExist:
-        # Jeśli nie jesteś właścicielem wypożyczenia, to cię cofamy
+    loans = Loan.objects.filter(book=book, user=request.user, returned=False)
+
+    if not loans.exists():
         return redirect('book_list')
 
-    loan.returned = True
+    for loan in loans:
+        loan.returned = True
+        loan.save()
+
     book.is_available = True
-    loan.save()
     book.save()
     return redirect('book_list')
+
 
 def login_view(request):
     if request.method == 'POST':
